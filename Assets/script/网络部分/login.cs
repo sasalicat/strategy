@@ -18,8 +18,6 @@ public class login : MonoBehaviour {
         KBEngine.Event.registerOut("onConnectState",this, "onConnectState");
         KBEngine.Event.registerOut("onLoginFailed", this, "onLoginFailed");
         KBEngine.Event.registerOut("onLoginSuccessfully", this, "onLoginSuccessfully");
-        KBEngine.Event.registerOut("onEnterWorld", this, "onEnterWorld");
-        KBEngine.Event.registerOut("onEnterSpace", this, "onEnterSpace");
         //KBEngine.Event.registerOut("onLeaveWorld", this, "onLeaveWorld");
 
     }
