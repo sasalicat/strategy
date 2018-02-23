@@ -112,5 +112,17 @@
             arg["time"] = time;
             ((KBWarManager)WarFieldManager.manager).addOrder(KBWarManager.BE_REPEL, arg);
         }
+        public void addBuff(sbyte buffNo)
+        {
+            Dictionary<string, object> arg = new Dictionary<string, object>();
+            arg["no"] = buffNo; ;
+            ((KBWarManager)WarFieldManager.manager).addOrder(KBWarManager.ADD_BUFF, arg);
+        }
+        public void delBuff(sbyte buffNo)
+        {
+            Dictionary<string, object> arg = new Dictionary<string, object>();
+            arg["no"] = buffNo; ;
+            ((KBWarManager)WarFieldManager.manager).addOrder(KBWarManager.DELETE_BUFF, arg);
+        }
     }
 }

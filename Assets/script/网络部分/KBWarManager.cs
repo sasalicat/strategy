@@ -17,6 +17,8 @@ public class KBWarManager : WarFieldManager
     public const sbyte USE_SKILL = 8;
     public const sbyte BEEN_HEAL = 9;
     public const sbyte BE_REPEL = 10;
+    public const sbyte ADD_BUFF = 11;
+    public const sbyte DELETE_BUFF = 12;
     private class Order
     {
         public sbyte actionNo;
@@ -77,6 +79,7 @@ public class KBWarManager : WarFieldManager
                               //  Debug.Log(obj);
                             //}
                             bag.init(((List<object>) noworder.args["skillList"]));
+                            roles[(sbyte)noworder.args["no"]].AddComponent<BuffBag>();
                             break;
                         }
                     case TURN_NO:
@@ -158,6 +161,26 @@ public class KBWarManager : WarFieldManager
                         {
                             Debug.Log("berepel");
                             roles[turnOwnerNo].GetComponent<Foot>().repelBegin((Vector2)noworder.args["arraw"],(float)noworder.args["time"]);
+                            break;
+                        }
+                    case ADD_BUFF:
+                        {
+                            BuffBag bag = roles[turnOwnerNo].GetComponent<BuffBag>();
+                            string bname = BuffList.main.buffs[(sbyte)noworder.args["no"]];
+                            Buff newbuff = (Buff)roles[turnOwnerNo].AddComponent(System.Type.GetType(bname));
+                            bag.buffsWithIn[(sbyte)noworder.args["no"]] = newbuff;
+                            newbuff.onAdd();
+                            break;
+                        }
+                    case DELETE_BUFF:
+                        {
+                            Debug.Log("delete buff no" + (sbyte)noworder.args["no"]);
+                            BuffBag bag = roles[turnOwnerNo].GetComponent<BuffBag>();
+                            bag.buffsWithIn[(sbyte)noworder.args["no"]].onDelete();
+                            if (! bag.buffsWithIn.Remove((sbyte)noworder.args["no"]))//如果要remove的key不在里面
+                            {//报错
+                                Debug.LogError("在deletebuff中 buff no"+ (sbyte)noworder.args["no"]+"不在buffbag内");
+                            }
                             break;
                         }
                 }
