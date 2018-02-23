@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoleList : MonoBehaviour {
-    public static RoleList main;
-    public List<GameObject> roles;
+public class skillNameList : MonoBehaviour {
+    public static skillNameList main;
+    public List<string> skillNames;
     protected void Start()
     {
         if (main != null && main != this)
@@ -16,9 +16,4 @@ public class RoleList : MonoBehaviour {
             main = this;
         }
     }
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
 }

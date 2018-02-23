@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoleList : MonoBehaviour {
-    public static RoleList main;
-    public List<GameObject> roles;
+public class EffectionTable : MonoBehaviour {
+    public static EffectionTable main;
     protected void Start()
     {
         if (main != null && main != this)
@@ -16,9 +15,9 @@ public class RoleList : MonoBehaviour {
             main = this;
         }
     }
-
-    // Update is called once per frame
-    void Update () {
+    public List<GameObject> effections = new List<GameObject>();
+	// Update is called once per frame
+	void Update () {
 		
 	}
 }
