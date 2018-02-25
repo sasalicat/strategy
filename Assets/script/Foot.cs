@@ -69,7 +69,7 @@ public class Foot : MonoBehaviour {
         this.repelTime = time;
     }
     //特效移动--------------------------------------------------------------------------
-    public void rush_Back(Vector3 shift,float time)
+    public void rush_Back(Vector3 shift,float time)//冲刺
     {
         if (rushTime > 0)//已经有一个rush进程
         {
@@ -82,10 +82,15 @@ public class Foot : MonoBehaviour {
         hasRushTime = 0;
         lastRush = shift;
     }
-    public void shake(float time)
+    public void shake(float time)//颤抖
     {
         shakeTime += time;
     }
+    public void swing(float min,float max,float cycle,int times)
+    {
+
+    }
+
 	// Update is called once per frame
 	void Update () {
         /*

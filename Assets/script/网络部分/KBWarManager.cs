@@ -130,6 +130,11 @@ public class KBWarManager : WarFieldManager
                                     debugPos[i] += foot.repelSpeed * cycle;
                                     Debug.Log("time"+foot.repelTime+" repel add:" + foot.repelSpeed * cycle);
                                 }
+                                BuffBag buffBag = roles[i].GetComponent<BuffBag>();
+                                foreach(KeyValuePair<sbyte,Buff> pair in buffBag.buffsWithIn)
+                                {
+                                    pair.Value.onUpdate(cycle);
+                                }
                                 Debug.Log("no" + i + " position is("+debugPos[i].x+","+debugPos[i].y+")");
                             }
                             foreach (KeyValuePair<sbyte,GameObject> pair in roles){
@@ -148,7 +153,6 @@ public class KBWarManager : WarFieldManager
                     case USE_SKILL:
                         {
                             Debug.Log("index is "+ (sbyte)noworder.args["index"]+"traget no is "+ (sbyte)noworder.args["tragetNo"]);
-                            Debug.Log("skillIInside count is " + sbags[turnOwnerNo].skillsInside.Count + "role lens is " + roles.Count);
                             sbags[turnOwnerNo].skillsInside[(sbyte)noworder.args["index"]].trigger(roles[(sbyte)noworder.args["tragetNo"]]);
                             break;
                         }
@@ -165,6 +169,7 @@ public class KBWarManager : WarFieldManager
                         }
                     case ADD_BUFF:
                         {
+                            Debug.Log("add buff no" + (sbyte)noworder.args["no"]);
                             BuffBag bag = roles[turnOwnerNo].GetComponent<BuffBag>();
                             string bname = BuffList.main.buffs[(sbyte)noworder.args["no"]];
                             Buff newbuff = (Buff)roles[turnOwnerNo].AddComponent(System.Type.GetType(bname));
