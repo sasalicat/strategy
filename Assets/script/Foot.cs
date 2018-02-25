@@ -19,6 +19,11 @@ public class Foot : MonoBehaviour {
     //repel------------------------------
     public Vector2 repelSpeed = Vector2.zero;
     public float repelTime = 0;
+    //swing------------------------------
+    private float swingAngle = 0;
+    private float swingTimeLeft = 0;
+    private float swingSpeed = 0;
+    private float cycleTime = 0;
 
     public float shakeWeight
     {
@@ -86,9 +91,15 @@ public class Foot : MonoBehaviour {
     {
         shakeTime += time;
     }
-    public void swing(float min,float max,float cycle,int times)
+    public void swing(float swingAngle,float cycleTime,int times)
     {
-
+        transform.eulerAngles = new Vector3(0, 0, -swingAngle);
+        swingTimeLeft = cycleTime * times;
+        Debug.Log("in set swing swingTimeLeft is" + swingTimeLeft);
+        swingSpeed = -swingAngle * 2 / cycleTime;
+        Debug.Log("swingSpeed is" + swingSpeed);
+        this.swingAngle = swingAngle;
+        this.cycleTime = cycleTime;
     }
 
 	// Update is called once per frame
@@ -133,6 +144,24 @@ public class Foot : MonoBehaviour {
             {
                 lastShakeShift = Vector2.zero;//清空上次的摇摆值
             }
+        }
+        if (swingTimeLeft > 0)
+        {
+            float beforecyc = swingTimeLeft % cycleTime;
+            swingTimeLeft -= Time.deltaTime;
+
+                transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z+ swingSpeed * Time.deltaTime);
+                
+                if (swingTimeLeft%cycleTime>beforecyc)
+                {
+                    Debug.Log("in swing z" + transform.eulerAngles.z);
+                    swingSpeed = -swingSpeed;
+                }
+                if (swingTimeLeft <= 0)
+                {
+                    transform.eulerAngles = Vector3.zero;
+                }
+            
         }
 	}
 }

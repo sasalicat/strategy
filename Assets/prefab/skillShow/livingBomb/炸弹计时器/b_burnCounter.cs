@@ -28,7 +28,7 @@ public class b_burnCounter : Buff {
 
     public override void onDelete()
     {
-        Debug.Log("活体炸弹的delete");
+        GetComponent<Foot>().shake(0.25f);
         Destroy(prab);
         GameObject obj = EffectionTable.main.effections[9];
         Instantiate(obj, transform.position, transform.rotation);
