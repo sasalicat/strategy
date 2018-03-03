@@ -124,5 +124,10 @@
             arg["no"] = buffNo; ;
             ((KBWarManager)WarFieldManager.manager).addOrder(KBWarManager.DELETE_BUFF, arg);
         }
+        public void died()
+        {
+            Debug.Log("receive died");
+            ((KBWarManager)WarFieldManager.manager).addOrder(KBWarManager.DIED, null);
+        }
     }
 }

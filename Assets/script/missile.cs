@@ -9,7 +9,7 @@ public class missile : effection{
     public SimpleDele onHitTraget;
 	
 	// Update is called once per frame
-	void Update () {
+	protected void Update () {
         if (traget != null)
         {
             Vector3 toTraget = traget.transform.position - transform.position;

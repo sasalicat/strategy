@@ -28,7 +28,7 @@ public class b_burnCounter : Buff {
 
     public override void onDelete()
     {
-        GetComponent<Foot>().shake(0.25f);
+        GetComponent<Foot>().shake(0.5f);
         Destroy(prab);
         GameObject obj = EffectionTable.main.effections[9];
         Instantiate(obj, transform.position, transform.rotation);

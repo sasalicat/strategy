@@ -1,0 +1,224 @@
+fileFormatVersion: 2
+guid: 38dfcb33c86a32e4faa8a414d66bea20
+timeCreated: 1519650527
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: "\u548C\u5149\u7D20\u6750(712)_0"
+    21300002: "\u548C\u5149\u7D20\u6750(712)_1"
+    21300004: "\u548C\u5149\u7D20\u6750(712)_2"
+    21300006: "\u548C\u5149\u7D20\u6750(712)_3"
+    21300008: "\u548C\u5149\u7D20\u6750(712)_4"
+    21300010: "\u548C\u5149\u7D20\u6750(712)_6"
+    21300012: "\u548C\u5149\u7D20\u6750(712)_7"
+    21300014: "\u548C\u5149\u7D20\u6750(712)_10"
+    21300016: "\u548C\u5149\u7D20\u6750(712)_11"
+    21300018: "\u548C\u5149\u7D20\u6750(712)_12"
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: "\u548C\u5149\u7D20\u6750(712)_0"
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 256
+        width: 236
+        height: 112
+      alignment: 9
+      pivot: {x: 0.8165093, y: 0.45001194}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: "\u548C\u5149\u7D20\u6750(712)_1"
+      rect:
+        serializedVersion: 2
+        x: 521
+        y: 364
+        width: 16
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: "\u548C\u5149\u7D20\u6750(712)_2"
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 247
+        width: 227
+        height: 124
+      alignment: 9
+      pivot: {x: 0.808298, y: 0.52257586}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: "\u548C\u5149\u7D20\u6750(712)_3"
+      rect:
+        serializedVersion: 2
+        x: 867
+        y: 367
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: "\u548C\u5149\u7D20\u6750(712)_4"
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 244
+        width: 233
+        height: 121
+      alignment: 9
+      pivot: {x: 0.8088482, y: 0.51156765}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: "\u548C\u5149\u7D20\u6750(712)_6"
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 124
+        width: 232
+        height: 120
+      alignment: 9
+      pivot: {x: 0.83785206, y: 0.51166445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: "\u548C\u5149\u7D20\u6750(712)_7"
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 127
+        width: 247
+        height: 112
+      alignment: 9
+      pivot: {x: 0.86833507, y: 0.5371596}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: "\u548C\u5149\u7D20\u6750(712)_10"
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 5
+        width: 230
+        height: 109
+      alignment: 9
+      pivot: {x: 0.8486175, y: 0.5256824}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: "\u548C\u5149\u7D20\u6750(712)_11"
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 8
+        width: 233
+        height: 106
+      alignment: 9
+      pivot: {x: 0.8282422, y: 0.5132045}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: "\u548C\u5149\u7D20\u6750(712)_12"
+      rect:
+        serializedVersion: 2
+        x: 691
+        y: 4
+        width: 223
+        height: 108
+      alignment: 9
+      pivot: {x: 0.8349646, y: 0.5129602}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

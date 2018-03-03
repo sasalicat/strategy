@@ -19,6 +19,7 @@ public class KBWarManager : WarFieldManager
     public const sbyte BE_REPEL = 10;
     public const sbyte ADD_BUFF = 11;
     public const sbyte DELETE_BUFF = 12;
+    public const sbyte DIED = 13;
     private class Order
     {
         public sbyte actionNo;
@@ -39,6 +40,18 @@ public class KBWarManager : WarFieldManager
     public void addOrder(sbyte actionNo,Dictionary<string,object> args)
     {
         orders.Add(new Order(actionNo, args));
+    }
+    public void removeRole(GameObject role)
+    {
+        foreach(KeyValuePair<sbyte,GameObject> pair in roles)
+        {
+            if (pair.Value == role)
+            {
+                Debug.Log("在removeRole中");
+                roles.Remove(pair.Key);
+                break;
+            }
+        }
     }
     // Use this for initialization
     protected void Start () {
@@ -80,6 +93,8 @@ public class KBWarManager : WarFieldManager
                             //}
                             bag.init(((List<object>) noworder.args["skillList"]));
                             roles[(sbyte)noworder.args["no"]].AddComponent<BuffBag>();
+                            Skin skin= roles[(sbyte)noworder.args["no"]].AddComponent<Skin>();
+                            skin.onDestory += removeRole;
                             break;
                         }
                     case TURN_NO:
@@ -117,9 +132,11 @@ public class KBWarManager : WarFieldManager
                         }
                     case UPDATE_END:
                         {
-                            for(sbyte i=0;i < debugPos.Count; i++)
+                            foreach(sbyte i in roles.Keys)
                             {
-                                Foot foot = roles[i].GetComponent<Foot>();
+
+                                 Foot foot = roles[i].GetComponent<Foot>();
+
                                 if (foot.moving)
                                 {
                                     debugPos[i] += foot.dir * cycle * foot.speed;
@@ -139,6 +156,7 @@ public class KBWarManager : WarFieldManager
                             }
                             foreach (KeyValuePair<sbyte,GameObject> pair in roles){
                                 //pair.Value.GetComponent<Foot>().keepMove(cycle);
+     
                                 pair.Value.GetComponent<Foot>().tp(cycle);
                             } 
                             nextUpdate = cycle;
@@ -147,6 +165,7 @@ public class KBWarManager : WarFieldManager
                         }
                     case TAKE_DAMAGE:
                         {
+                            Debug.Log("takeDamage" + (sbyte)noworder.args["num"]);
                             FloatingCreate.main.createAt((sbyte)noworder.args["num"], roles[turnOwnerNo].transform.position);
                             break;
                         }
@@ -186,6 +205,12 @@ public class KBWarManager : WarFieldManager
                             {//报错
                                 Debug.LogError("在deletebuff中 buff no"+ (sbyte)noworder.args["no"]+"不在buffbag内");
                             }
+                            break;
+                        }
+                    case DIED:
+                        {
+                            Debug.Log("died is coming");
+                            roles[turnOwnerNo].GetComponent<Skin>().diedEffect();
                             break;
                         }
                 }

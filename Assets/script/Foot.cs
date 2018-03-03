@@ -154,7 +154,7 @@ public class Foot : MonoBehaviour {
                 
                 if (swingTimeLeft%cycleTime>beforecyc)
                 {
-                    Debug.Log("in swing z" + transform.eulerAngles.z);
+                    //Debug.Log("in swing z" + transform.eulerAngles.z);
                     swingSpeed = -swingSpeed;
                 }
                 if (swingTimeLeft <= 0)
