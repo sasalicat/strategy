@@ -20,6 +20,7 @@ public class KBWarManager : WarFieldManager
     public const sbyte ADD_BUFF = 11;
     public const sbyte DELETE_BUFF = 12;
     public const sbyte DIED = 13;
+    public const sbyte SET_CAN_MOVE = 14;
     private class Order
     {
         public sbyte actionNo;
@@ -211,6 +212,11 @@ public class KBWarManager : WarFieldManager
                         {
                             Debug.Log("died is coming");
                             roles[turnOwnerNo].GetComponent<Skin>().diedEffect();
+                            break;
+                        }
+                    case SET_CAN_MOVE:
+                        {
+                            foots[turnOwnerNo].canMove = (bool)noworder.args["canMove"];
                             break;
                         }
                 }

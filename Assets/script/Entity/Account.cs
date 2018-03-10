@@ -31,7 +31,7 @@
             Debug.Log("服務器的cell準備好了");
         }
         public void addNewUnit(sbyte no,short kind,Dictionary<String,object> skillList, float posx, float posy,long ownerid) {//放置一个新角色
-            //Debug.Log("type no:" + no.GetType()+" skillList:"+skillList.GetType()+" posx:"+posx.GetType()+" posy"+posy.GetType());
+            Debug.Log("加新的角色 no"+no+" kind"+kind);
             Dictionary<string, object> arg=new Dictionary<string, object>();
             arg["kind"] = kind;
             arg["skillList"] = skillList["list"];
@@ -128,6 +128,12 @@
         {
             Debug.Log("receive died");
             ((KBWarManager)WarFieldManager.manager).addOrder(KBWarManager.DIED, null);
+        }
+        public void setcanMove(sbyte mov)
+        {
+            Dictionary<string, object> arg = new Dictionary<string, object>();
+            arg["canMove"] = (mov == 1);
+            ((KBWarManager)WarFieldManager.manager).addOrder(KBWarManager.SET_CAN_MOVE, arg);
         }
     }
 }

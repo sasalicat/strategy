@@ -4,6 +4,7 @@ using UnityEngine;
 
 
 public class Foot : MonoBehaviour {
+    public bool canMove = true;
     public bool moving = false;
     public bool debug = false;
     public Vector2 dir = new Vector2(0, 0);
@@ -52,7 +53,7 @@ public class Foot : MonoBehaviour {
     }
     public void tp(float time)//立即传送
     {
-        if (moving)
+        if (moving&&canMove)
         {
             transform.position += ((Vector3)dir) * time*speed;
             if (debug)
