@@ -11,6 +11,7 @@ public class login : MonoBehaviour {
     public GameObject model;
     public GameObject buttom;//確定按鈕
     public GameObject field;//口令輸入區
+    public GameObject mouseCanvas;
     public Text inf;
     public Text passward;
 	// Use this for initialization
@@ -58,6 +59,8 @@ public class login : MonoBehaviour {
         Debug.Log("登入成功！ uuid is" + uuid + " id is" + id);
         buttom.SetActive(false);
         field.SetActive(false);
+        mouseCanvas.SetActive(true);
+
     }
     public void onEnterWorld(Entity e)
     {
