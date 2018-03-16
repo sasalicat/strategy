@@ -6,7 +6,7 @@ public class s_misslieStand : Skill{
     protected sbyte prafebIndex;
     protected Vector2 InitPos = Vector2.zero;//投射物初始位置
     protected float rotateZ = 0;//投射物初始转向
-    protected List<missile.SimpleDele> onhit = new List<missile.SimpleDele>();
+    protected List<Delegate.withNothing> onhit = new List<Delegate.withNothing>();
     // Use this for initialization
     public override void trigger(GameObject traget)
     {
@@ -15,7 +15,7 @@ public class s_misslieStand : Skill{
         missile missile = newone.GetComponent<missile>();
         missile.traget = traget;
         missile.onHitTraget = missile.destorySelf;
-        foreach(missile.SimpleDele fuction in onhit)
+        foreach(Delegate.withNothing fuction in onhit)
         {
             missile.onHitTraget += fuction;
         }

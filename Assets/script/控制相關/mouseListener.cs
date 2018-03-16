@@ -11,8 +11,7 @@ public class mouseListener : MonoBehaviour {
     public Vector2 ScreenSize;//用世界座標換算後的屏幕大小
     public const float BOUNDARY_WIDTH = 16;
     public const float BOUNDARY_HEIGHT = 22.5f;
-    public delegate void withGameObject(GameObject gobj);
-    public withGameObject onReleaseDrag=null;
+    public Delegate.withGameObject onReleaseDrag=null;
 	// Use this for initialization
     public static Vector2 translateMouse()
     {
@@ -57,7 +56,7 @@ public class mouseListener : MonoBehaviour {
         }
         if (!clicking)
         {
-            Debug.Log("沒有clicking");
+            //Debug.Log("沒有clicking");
             if(dragObj != null)
             {
                 onReleaseDrag(dragObj);
@@ -69,7 +68,7 @@ public class mouseListener : MonoBehaviour {
         {//
          //
             Debug.Log("enter drug|||||||||||");
-            Vector2 arraw= nowMousePos - lastMouesPos;
+            Vector2 arraw= nowMousePos - lastMouesPos;//上一帧和这一帧鼠标的位移
             float presu_x = Camera.main.transform.position.x + arraw.x;
             float presu_y = Camera.main.transform.position.y + arraw.y;
             //Debug.Log("presu_x+size:"+(presu_x + ScreenSize.x)+"presu_x-size:"+(presu_x - ScreenSize.x));
@@ -81,6 +80,7 @@ public class mouseListener : MonoBehaviour {
         else
         {
             g.turnGreen(nowMousePos);
+            Debug.Log("turn green end-------------------");
         }
         lastMouesPos = nowMousePos;
 	}

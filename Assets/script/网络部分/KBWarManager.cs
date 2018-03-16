@@ -228,4 +228,12 @@ public class KBWarManager : WarFieldManager
             }
         }
 	}
+    public override void createRole(sbyte rno,Vector2 pos)
+    {
+        KBEngine.KBEngineApp.app.player().cellCall("createRole", new object[] { rno, pos });
+    }
+    public void debugGameStart()
+    {
+        KBEngine.KBEngineApp.app.player().cellCall("debugGame", new object[] {});
+    }
 }

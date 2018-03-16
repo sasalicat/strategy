@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class missile : effection{
-    public delegate void SimpleDele();
     public GameObject traget = null;
     public float speed = 5;
-    public SimpleDele onHitTraget;
+    public Delegate.withNothing onHitTraget;
 	
 	// Update is called once per frame
 	protected void Update () {

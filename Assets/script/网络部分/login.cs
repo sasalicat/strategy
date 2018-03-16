@@ -60,6 +60,7 @@ public class login : MonoBehaviour {
         buttom.SetActive(false);
         field.SetActive(false);
         mouseCanvas.SetActive(true);
+        girdManager.main.StartDraw();
 
     }
     public void onEnterWorld(Entity e)

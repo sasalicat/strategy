@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Skin : MonoBehaviour {
-    public delegate void onChangeFinsh(Color nowcolor);
-    public delegate void objCallBack(GameObject self);
     Color oriColor;
     private Color tragetColor;
     private Color speedColor;
     private float timeLeft = 0;
-    private onChangeFinsh onFinish=null;
-    public objCallBack onDestory = null;
+    private Delegate.withColor onFinish=null;
+    public Delegate.withGameObject onDestory = null;
     private SpriteRenderer render;
 	// Use this for initialization
 	void Start () {
@@ -32,7 +30,7 @@ public class Skin : MonoBehaviour {
             }
         }
 	}
-    public void changeColor(Color newcolor, float time, onChangeFinsh finish)
+    public void changeColor(Color newcolor, float time, Delegate.withColor finish)
     {
         if (onFinish != null && timeLeft>0)
             onFinish(render.color);

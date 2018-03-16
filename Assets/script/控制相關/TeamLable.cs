@@ -40,8 +40,10 @@ public class TeamLable : MonoBehaviour {
     public void delPhantasm(GameObject gobj)
     {
         Debug.Log("delPhantasm 被觸發");
-        if (gobj.GetComponent<Phantasm>() != null)//確定是幻影
+        Phantasm script = gobj.GetComponent<Phantasm>();
+        if (script != null)//確定是幻影
         {
+            WarFieldManager.manager.createRole(script.roleNo, gobj.transform.position);
             Destroy(gobj);
         }
     }
