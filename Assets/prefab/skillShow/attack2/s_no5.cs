@@ -6,7 +6,6 @@ public class s_no5 : Skill
 {
     public override void trigger(GameObject traget)
     {
-        GetComponent<Foot>().swing(60,0.25f,2);
         GameObject newone = Instantiate(EffectionTable.main.effections[5], transform.position, EffectionTable.main.effections[0].transform.rotation);
         missile missile = newone.GetComponent<missile>();
         missile.traget = traget;

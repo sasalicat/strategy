@@ -6,6 +6,7 @@ using UnityEngine;
 public class s_no1 : Skill {
     public override void trigger(GameObject traget)
     {
+        GetComponent<Foot>().swing(60, 0.15f, 2);
         Vector3 toward = traget.transform.position - transform.position;
         Vector3 tragetPos=transform.position+ 3*toward.normalized;
         GameObject newone= Instantiate(EffectionTable.main.effections[4],tragetPos, EffectionTable.main.effections[0].transform.rotation);

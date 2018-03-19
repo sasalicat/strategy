@@ -111,6 +111,43 @@ class girdGroup
         }
         return ans;
     }
+    public bool valid(Vector2 mousePos)
+    {
+        Vector2 indexs = getCenter(mousePos);
+        if (inside(mousePos))
+        {
+            if (mode == 1)
+            {
+                if (indexs.x > 0 && indexs.y > 0)
+                {
+                    if (girds[(int)indexs.y, (int)indexs.x].owner != null)
+                    {
+                        return false;
+                    }
+                    if (girds[(int)indexs.y, (int)indexs.x - 1].owner != null)
+                    {
+                        return false;
+                    }
+                    if (girds[(int)indexs.y - 1, (int)indexs.x].owner != null)
+                    {
+                        return false;
+                    }
+                    if (girds[(int)indexs.y - 1, (int)indexs.x - 1].owner != null)
+                    {
+                        return false;
+                    }
+                    return true;
+                }
+            }
+            else if (mode == 2)
+            {
+                if(girds[(int)indexs.y,(int)indexs.x].owner!=null)
+                    return false;
+                return true;
+            }
+        }
+        return false;
+    }
     public Vector2 getCenter(Vector2 pos)
     {
 
@@ -156,14 +193,46 @@ class girdGroup
                     }
                     else
                     {
-                        girds[y, x].land.GetComponent<SpriteRenderer>().color = manager.color_establish;
-                        manager.beDyed.Add(girds[y, x].land);
-                        girds[y - 1, x].land.GetComponent<SpriteRenderer>().color = manager.color_establish;
-                        manager.beDyed.Add(girds[y - 1, x].land);
-                        girds[y, x - 1].land.GetComponent<SpriteRenderer>().color = manager.color_establish;
-                        manager.beDyed.Add(girds[y, x - 1].land);
-                        girds[y - 1, x - 1].land.GetComponent<SpriteRenderer>().color = manager.color_establish;
-                        manager.beDyed.Add(girds[y - 1, x - 1].land);
+                        if (girds[y, x].owner == null)
+                        {
+                            girds[y, x].land.GetComponent<SpriteRenderer>().color = manager.color_establish;
+                            manager.beDyed.Add(girds[y, x].land);
+                        }
+                        else
+                        {
+                            girds[y, x].land.GetComponent<SpriteRenderer>().color = manager.color_error;
+                            manager.beDyed.Add(girds[y, x].land);
+                        }
+                        if (girds[y - 1, x].owner == null)
+                        {
+                            girds[y - 1, x].land.GetComponent<SpriteRenderer>().color = manager.color_establish;
+                            manager.beDyed.Add(girds[y - 1, x].land);
+                        }
+                        else
+                        {
+                            girds[y - 1, x].land.GetComponent<SpriteRenderer>().color = manager.color_error;
+                            manager.beDyed.Add(girds[y - 1, x].land);
+                        }
+                        if (girds[y, x - 1].owner == null)
+                        {
+                            girds[y, x - 1].land.GetComponent<SpriteRenderer>().color = manager.color_establish;
+                            manager.beDyed.Add(girds[y, x - 1].land);
+                        }
+                        else
+                        {
+                            girds[y, x - 1].land.GetComponent<SpriteRenderer>().color = manager.color_error;
+                            manager.beDyed.Add(girds[y, x - 1].land);
+                        }
+                        if (girds[y - 1, x - 1].owner == null)
+                        {
+                            girds[y - 1, x - 1].land.GetComponent<SpriteRenderer>().color = manager.color_establish;
+                            manager.beDyed.Add(girds[y - 1, x - 1].land);
+                        }
+                        else
+                        {
+                            girds[y - 1, x - 1].land.GetComponent<SpriteRenderer>().color = manager.color_error;
+                            manager.beDyed.Add(girds[y - 1, x - 1].land);
+                        }
                     }
                 }
             }
@@ -192,6 +261,7 @@ class girdGroup
             if (mode == 1)
             {
                 girds[(int)indexs.y, (int)indexs.x].owner = role;
+                Debug.Log("role in "+ indexs);
                 if (indexs.y > 0)//左边格子检查
                 {
                     girds[(int)indexs.y - 1, (int)indexs.x].owner = role;
@@ -234,6 +304,7 @@ public class girdManager : MonoBehaviour {
     // Use this for initialization
     public void aftRoleIn(GameObject roleObj)
     {
+        Debug.Log(">>>>>>>>进入 aftRoleIn:"+roleObj);
         foreach(girdGroup g in groups)
         {
             g.roleIn(roleObj);
@@ -311,6 +382,18 @@ public class girdManager : MonoBehaviour {
     {
         drawRectangle(-7, -19, 2, 2, 8, 8);
         drawRectangle(-7, 5, 2, 2, 8, 8);
+    }
+    public bool Vaild(Vector2 mousePos)
+    {
+        bool ans = false;
+        foreach(girdGroup g in groups)
+        {
+            if (g.valid(mousePos))
+            {
+                ans = true;
+            }
+        }
+        return ans;
     }
     public GameObject createObj(GameObject praf,Vector3 pos)
     {

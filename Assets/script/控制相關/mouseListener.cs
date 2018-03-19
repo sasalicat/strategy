@@ -59,6 +59,7 @@ public class mouseListener : MonoBehaviour {
             //Debug.Log("沒有clicking");
             if(dragObj != null)
             {
+                Debug.Log(">>>鼠标施放<<<");
                 onReleaseDrag(dragObj);
                 dragObj = null;
             }

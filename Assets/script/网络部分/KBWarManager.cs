@@ -67,6 +67,14 @@ public class KBWarManager : WarFieldManager
             while (orders.Count > 0)
             {
                 Order noworder = orders[0];
+                if (noworder == null)
+                {
+                    Debug.Log("即将发生空值错误,这是最后的报错祝,你好运未来的我,印出整个orders列表:");
+                    for(int i = 0; i < orders.Count; i++)
+                    {
+                        Debug.Log("index" + i + " order:" + orders[i] + " actionNo:"+orders[i].actionNo);
+                    }
+                }
                 //Debug.Log(orders.Count + "orders are waiting");
                 switch (noworder.actionNo)
                 {
@@ -96,6 +104,8 @@ public class KBWarManager : WarFieldManager
                             roles[(sbyte)noworder.args["no"]].AddComponent<BuffBag>();
                             Skin skin= roles[(sbyte)noworder.args["no"]].AddComponent<Skin>();
                             skin.onDestory += removeRole;
+                            //设置格子主管的占用
+                            AfterCreateRole(roles[(sbyte)noworder.args["no"]]);
                             break;
                         }
                     case TURN_NO:

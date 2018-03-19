@@ -43,7 +43,11 @@ public class TeamLable : MonoBehaviour {
         Phantasm script = gobj.GetComponent<Phantasm>();
         if (script != null)//確定是幻影
         {
-            WarFieldManager.manager.createRole(script.roleNo, gobj.transform.position);
+            if (girdManager.main.Vaild(gobj.transform.position))
+            {
+                WarFieldManager.manager.createRole(script.roleNo, gobj.transform.position);
+            }
+            Debug.Log("删除幻影");
             Destroy(gobj);
         }
     }
