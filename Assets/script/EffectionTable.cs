@@ -16,6 +16,7 @@ public class EffectionTable : MonoBehaviour {
         }
     }
     public List<GameObject> effections = new List<GameObject>();
+    public List<GameObject> sp_effections = new List<GameObject>();
 	// Update is called once per frame
 	void Update () {
 		

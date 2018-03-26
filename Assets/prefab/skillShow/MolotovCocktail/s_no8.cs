@@ -8,12 +8,5 @@ public class s_no8 : s_misslieStand {
     {
         prafebIndex = 10;
     }
-    public override void trigger(GameObject traget)
-    {
-
-        Vector3 arraw = traget.transform.position - transform.position;
-        InitPos = transform.position;
-        base.trigger(traget);
-    }
 
 }

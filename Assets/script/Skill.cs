@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class Skill:MonoBehaviour {
     public sbyte index;//技能在角色身上的索引值
-    public abstract void trigger(GameObject traget);//技能生效时呼叫
+    public abstract void trigger(object traget);//技能生效时呼叫
 }

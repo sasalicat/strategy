@@ -7,7 +7,7 @@ public class AngleGetter  {
     {
         vector.z = 0;
         float ans = Vector3.Angle(vector, Vector3.up);
-        if (vector.x > 0)
+        if (vector.x >= 0)
         {
             return ans;
         }

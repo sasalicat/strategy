@@ -51,4 +51,9 @@ public class TeamLable : MonoBehaviour {
             Destroy(gobj);
         }
     }
+    public void onGameStart()
+    {
+        girdManager.main.clearGirds();
+        gameObject.SetActive(false);
+    }
 }

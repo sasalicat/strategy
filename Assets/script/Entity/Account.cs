@@ -105,10 +105,18 @@
             arg["tragetNo"] = tragetNo;
             ((KBWarManager)WarFieldManager.manager).addOrder(KBWarManager.USE_SKILL, arg);
         }
+        public void useSkillmulti(sbyte skillIndex, Dictionary<string,object> tragets)//多目標技能
+        {
+            Dictionary<string, object> arg = new Dictionary<string, object>();
+            arg["index"] = skillIndex;
+
+            arg["tragets"] = tragets["list"];
+            ((KBWarManager)WarFieldManager.manager).addOrder(KBWarManager.USE_SKILL, arg);
+        }
         public void beRepel(Vector2 arraw,float time)
         {
             Dictionary<string, object> arg = new Dictionary<string, object>();
-            arg["arraw"] = arraw; ;
+            arg["arraw"] = arraw;
             arg["time"] = time;
             ((KBWarManager)WarFieldManager.manager).addOrder(KBWarManager.BE_REPEL, arg);
         }
@@ -134,6 +142,14 @@
             Dictionary<string, object> arg = new Dictionary<string, object>();
             arg["canMove"] = (mov == 1);
             ((KBWarManager)WarFieldManager.manager).addOrder(KBWarManager.SET_CAN_MOVE, arg);
+        }
+        public void createEffection(short effectionNo,sbyte tragetNo)
+        {
+            //Debug.Log("Account 收到 createEffection 的呼叫");
+            Dictionary<string, object> arg = new Dictionary<string, object>();
+            arg["effectionNo"] = (int)effectionNo;
+            arg["tragetNo"] = tragetNo;
+            ((KBWarManager)WarFieldManager.manager).addOrder(KBWarManager.CREATE_EFFECTION_SP, arg);
         }
     }
 }

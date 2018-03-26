@@ -21,6 +21,7 @@ public class KBWarManager : WarFieldManager
     public const sbyte DELETE_BUFF = 12;
     public const sbyte DIED = 13;
     public const sbyte SET_CAN_MOVE = 14;
+    public const sbyte CREATE_EFFECTION_SP = 15;
     private class Order
     {
         public sbyte actionNo;
@@ -182,9 +183,24 @@ public class KBWarManager : WarFieldManager
                         }
                     case USE_SKILL:
                         {
-                            Debug.Log("index is "+ (sbyte)noworder.args["index"]+"traget no is "+ (sbyte)noworder.args["tragetNo"]);
-                            sbags[turnOwnerNo].skillsInside[(sbyte)noworder.args["index"]].trigger(roles[(sbyte)noworder.args["tragetNo"]]);
-                            break;
+                            if (noworder.args.ContainsKey("tragets"))
+                            {
+                                List<object> list = (List<object>)noworder.args["tragets"];
+                                List<GameObject> gameObjects = new List<GameObject>();
+                                foreach (object no in list)
+                                {
+                                    Debug.Log("no type is" + no.GetType());
+                                    gameObjects.Add(roles[Convert.ToSByte((byte)no)]);
+                                }
+                                sbags[turnOwnerNo].skillsInside[(sbyte)noworder.args["index"]].trigger(gameObjects);
+                                break;
+                            }
+                            else
+                            {
+                                Debug.Log("index is " + (sbyte)noworder.args["index"] + "traget no is " + (sbyte)noworder.args["tragetNo"]);
+                                sbags[turnOwnerNo].skillsInside[(sbyte)noworder.args["index"]].trigger(roles[(sbyte)noworder.args["tragetNo"]]);
+                                break;
+                            }
                         }
                     case BEEN_HEAL:
                         {
@@ -229,6 +245,12 @@ public class KBWarManager : WarFieldManager
                             foots[turnOwnerNo].canMove = (bool)noworder.args["canMove"];
                             break;
                         }
+                    case CREATE_EFFECTION_SP:
+                        {
+                            GameObject newone= Instantiate(EffectionTable.main.sp_effections[(int)noworder.args["effectionNo"]],roles[(sbyte)noworder.args["tragetNo"]].transform.position,Quaternion.Euler(Vector3.zero));
+                            newone.GetComponent<effection_sp>().onBeenCreated(roles[(sbyte)noworder.args["tragetNo"]],roles[turnOwnerNo]);
+                            break;
+                        }
                 }
                 orders.Remove(noworder);
                 if (nextUpdate >= 0)//从updateend中跳出
@@ -244,6 +266,7 @@ public class KBWarManager : WarFieldManager
     }
     public void debugGameStart()
     {
+
         KBEngine.KBEngineApp.app.player().cellCall("debugGame", new object[] {});
     }
 }
