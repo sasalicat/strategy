@@ -178,7 +178,8 @@ public class KBWarManager : WarFieldManager
                     case TAKE_DAMAGE:
                         {
                             Debug.Log("takeDamage" + (sbyte)noworder.args["num"]);
-                            FloatingCreate.main.createAt((sbyte)noworder.args["num"], roles[turnOwnerNo].transform.position);
+                            Vector2 offset = UnityEngine.Random.insideUnitCircle;
+                            FloatingCreate.main.createAt((sbyte)noworder.args["num"], roles[turnOwnerNo].transform.position+(Vector3)offset);
                             break;
                         }
                     case USE_SKILL:

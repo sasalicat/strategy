@@ -10,7 +10,8 @@ public class SkillBag : MonoBehaviour {
         skillsInside = new List<Skill>();
         for(int i = 0; i < list.Count; i++)
         {
-         //   print("type is " + list[i].GetType());
+            //   print("type is " + list[i].GetType());
+            //Debug.Log("i:"+i);
             string name = (skillNameList.main).skillNames[(byte)list[i]];
             skillsInside.Add((Skill)gameObject.AddComponent(System.Type.GetType(name)));
         }
