@@ -63,16 +63,7 @@ public class login : MonoBehaviour {
         girdManager.main.StartDraw();
 
     }
-    public void onEnterWorld(Entity e)
-    {
-        Debug.Log("来自onEnterWorld id:"+e.id);
-        GameObject newone = (GameObject)Instantiate(model, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0));
-        EntityControl newcontrl = newone.AddComponent<EntityControl>();
-        newcontrl.entity = e;
-        Debug.Log("在 onEnterWorld中 entity is"+e);
-        e.renderObj = newcontrl;
-        Debug.Log("設置renderObj:"+e.renderObj);
-    }
+    
     public void onEnterSpace(Entity e)
     {
         Debug.Log("来自onEnterSpace id:"+e.id);
