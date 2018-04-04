@@ -42,6 +42,10 @@ public class KBWarManager : WarFieldManager
     public void addOrder(sbyte actionNo,Dictionary<string,object> args)
     {
         orders.Add(new Order(actionNo, args));
+        if (orders[orders.Count - 1] == null)
+        {
+            Debug.LogError("Add Order为null no为"+actionNo);
+        }
     }
     public void removeRole(GameObject role)
     {
@@ -71,9 +75,9 @@ public class KBWarManager : WarFieldManager
                 if (noworder == null)
                 {
                     Debug.Log("即将发生空值错误,这是最后的报错祝,你好运未来的我,印出整个orders列表:");
-                    for(int i = 0; i < orders.Count; i++)
+                    for (int i = 0; i < orders.Count; i++)
                     {
-                        Debug.Log("index" + i + " order:" + orders[i] + " actionNo:"+orders[i].actionNo);
+                        Debug.Log("index" + i + " order:" + orders[i]);
                     }
                 }
                 //Debug.Log(orders.Count + "orders are waiting");
