@@ -39,6 +39,7 @@ public class KBWarManager : WarFieldManager
     private Dictionary<sbyte, Foot> foots=new Dictionary<sbyte, Foot>();
     private Dictionary<sbyte, SkillBag> sbags = new Dictionary<sbyte, SkillBag>();
     public Dictionary<sbyte, Vector2> debugPos = new Dictionary<sbyte, Vector2>();
+    public GameObject hpbar;
     public void addOrder(sbyte actionNo,Dictionary<string,object> args)
     {
         orders.Add(new Order(actionNo, args));
@@ -109,6 +110,13 @@ public class KBWarManager : WarFieldManager
                             roles[(sbyte)noworder.args["no"]].AddComponent<BuffBag>();
                             Skin skin= roles[(sbyte)noworder.args["no"]].AddComponent<Skin>();
                             skin.onDestory += removeRole;
+                            //设置hpbar
+                            Color c;
+                            if ((long)noworder.args["ownerid"] == KBEngineApp.app.player().id)
+                                c = Color.red;
+                            else
+                                c = Color.blue;
+                            hpBarManager.main.CreateHpBar(roles[(sbyte)noworder.args["no"]],c);
                             //设置格子主管的占用
                             AfterCreateRole(roles[(sbyte)noworder.args["no"]]);
                             break;
@@ -241,7 +249,7 @@ public class KBWarManager : WarFieldManager
                         }
                     case DIED:
                         {
-                            Debug.Log("died is coming");
+                            Debug.LogWarning("died is coming");
                             roles[turnOwnerNo].GetComponent<Skin>().diedEffect();
                             break;
                         }
@@ -269,9 +277,17 @@ public class KBWarManager : WarFieldManager
     {
         KBEngine.KBEngineApp.app.player().cellCall("createRole", new object[] { rno, pos });
     }
+    public override void createTrap(sbyte tno,Vector2 pos)
+    {
+
+    }
     public void debugGameStart()
     {
 
         KBEngine.KBEngineApp.app.player().cellCall("debugGame", new object[] {});
+    }
+    public void debugChangeTeam()
+    {
+        KBEngineApp.app.player().cellCall("debugTeam", new object[] { });
     }
 }

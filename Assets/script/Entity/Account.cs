@@ -38,6 +38,7 @@
             Debug.Log("in add unit skillList is" + ((List<object>)skillList["list"]).Count);
             arg["position"] = new Vector2(posx, posy);
             arg["no"] = no;
+            arg["ownerid"] = ownerid;
             ((KBWarManager)WarFieldManager.manager).addOrder( KBWarManager.ADD_UNIT, arg);
         }
         public void setMoving(sbyte mov)

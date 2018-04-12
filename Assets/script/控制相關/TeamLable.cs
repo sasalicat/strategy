@@ -45,7 +45,10 @@ public class TeamLable : MonoBehaviour {
         {
             if (girdManager.main.Vaild(gobj.transform.position))
             {
-                WarFieldManager.manager.createRole(script.roleNo, gobj.transform.position);
+                if(script.kind==Phantasm.ROLE)
+                    WarFieldManager.manager.createRole(script.roleNo, gobj.transform.position);
+                else if(script.kind == Phantasm.TRAP)
+                    WarFieldManager.manager.crea
             }
             Debug.Log("删除幻影");
             Destroy(gobj);

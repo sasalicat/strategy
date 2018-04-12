@@ -24,5 +24,9 @@ public class WarFieldManager : MonoBehaviour {//管理场上角色的脚本
     {
        
     }
+    public virtual void createTrap(sbyte tno,Vector2 pos)
+    {
+
+    }
 
 }

@@ -31,7 +31,7 @@ public class contain
         this.owner = null;
     }
 }
-class girdGroup
+public class girdGroup
 {
     private sbyte mode = 1;
     public contain[,] girds;
@@ -300,7 +300,7 @@ public class girdManager : MonoBehaviour {
     public Color color_error;
     public Color color_origen;
     private sbyte mode = 1;
-    private List<girdGroup> groups=new List<girdGroup>();
+    public List<girdGroup> groups=new List<girdGroup>();
     // Use this for initialization
     public void aftRoleIn(GameObject roleObj)
     {
@@ -380,8 +380,8 @@ public class girdManager : MonoBehaviour {
     }
     public void StartDraw()
     {
-        drawRectangle(-7, -19, 2, 2, 8, 8);
-        drawRectangle(-7, 5, 2, 2, 8, 8);
+        drawRectangle(-7, -19, 2, 2, 8, 18);
+
     }
     public bool Vaild(Vector2 mousePos)
     {
