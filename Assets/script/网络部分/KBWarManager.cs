@@ -279,7 +279,7 @@ public class KBWarManager : WarFieldManager
     }
     public override void createTrap(sbyte tno,Vector2 pos)
     {
-
+        KBEngine.KBEngineApp.app.player().cellCall("createTrap", new object[] { tno, pos });
     }
     public void debugGameStart()
     {
