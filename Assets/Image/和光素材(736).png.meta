@@ -1,9 +1,16 @@
 fileFormatVersion: 2
 guid: 24f841e5243e3ec4db3155c3db4e0925
-timeCreated: 1523597025
-licenseType: Free
+timeCreated: 1523677270
+licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: "\u548C\u5149\u7D20\u6750(736)_0"
+    21300002: "\u548C\u5149\u7D20\u6750(736)_1"
+    21300004: "\u548C\u5149\u7D20\u6750(736)_2"
+    21300006: "\u548C\u5149\u7D20\u6750(736)_3"
+    21300008: "\u548C\u5149\u7D20\u6750(736)_4"
+    21300010: "\u548C\u5149\u7D20\u6750(736)_5"
+    21300012: "\u548C\u5149\u7D20\u6750(736)_6"
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -37,8 +44,8 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
+  alignment: 9
+  spritePivot: {x: 0.04225336, y: 0.022691686}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaUsage: 1
@@ -76,7 +83,98 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: "\u548C\u5149\u7D20\u6750(736)_0"
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 16
+        width: 108
+        height: 496
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: "\u548C\u5149\u7D20\u6750(736)_1"
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 419
+        width: 227
+        height: 67
+      alignment: 9
+      pivot: {x: 0.51708716, y: 0.4807024}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: "\u548C\u5149\u7D20\u6750(736)_2"
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 312
+        width: 312
+        height: 79
+      alignment: 9
+      pivot: {x: 0.2886558, y: 0.4672674}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: "\u548C\u5149\u7D20\u6750(736)_3"
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 224
+        width: 264
+        height: 76
+      alignment: 9
+      pivot: {x: 0.1718702, y: 0.36390224}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: "\u548C\u5149\u7D20\u6750(736)_4"
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 127
+        width: 244
+        height: 61
+      alignment: 9
+      pivot: {x: -0.013992372, y: 0.28804442}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: "\u548C\u5149\u7D20\u6750(736)_5"
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 24
+        width: 199
+        height: 36
+      alignment: 9
+      pivot: {x: -0.052256215, y: 0.49999988}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: "\u548C\u5149\u7D20\u6750(736)_6"
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 291
+        width: 22
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 

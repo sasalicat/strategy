@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 66249d4ce03cbd4469675858710bb295
-timeCreated: 1523597520
-licenseType: Free
+timeCreated: 1523679939
+licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
     21300000: "\u548C\u5149\u7D20\u6750(2031)_0"
@@ -92,7 +92,7 @@ TextureImporter:
         width: 184
         height: 197
       alignment: 9
-      pivot: {x: 0.37672156, y: 0.49651125}
+      pivot: {x: 0.5052694, y: 0.4528502}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -100,12 +100,12 @@ TextureImporter:
       name: "\u548C\u5149\u7D20\u6750(2031)_1"
       rect:
         serializedVersion: 2
-        x: 3
-        y: 100
+        x: 2
+        y: 99
         width: 129
         height: 195
       alignment: 9
-      pivot: {x: 0.10569436, y: 0.4400757}
+      pivot: {x: 0.3057175, y: 0.46212816}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -118,7 +118,7 @@ TextureImporter:
         width: 119
         height: 165
       alignment: 9
-      pivot: {x: 0.85812634, y: 0.6041478}
+      pivot: {x: 0.9243799, y: 0.53030014}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -126,12 +126,12 @@ TextureImporter:
       name: "\u548C\u5149\u7D20\u6750(2031)_3"
       rect:
         serializedVersion: 2
-        x: 2
-        y: 10
+        x: 3
+        y: 11
         width: 118
         height: 88
       alignment: 9
-      pivot: {x: 0.167965, y: -0.2029925}
+      pivot: {x: 0.10459564, y: -0.1265198}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -139,12 +139,12 @@ TextureImporter:
       name: "\u548C\u5149\u7D20\u6750(2031)_4"
       rect:
         serializedVersion: 2
-        x: 123
-        y: 11
+        x: 124
+        y: 12
         width: 125
         height: 87
       alignment: 9
-      pivot: {x: 0.25813636, y: -0.15460277}
+      pivot: {x: 0.12055029, y: -0.04287121}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -152,12 +152,12 @@ TextureImporter:
       name: "\u548C\u5149\u7D20\u6750(2031)_6"
       rect:
         serializedVersion: 2
-        x: 250
-        y: 2
+        x: 251
+        y: 3
         width: 157
         height: 125
       alignment: 9
-      pivot: {x: 0.33430317, y: 0.9612284}
+      pivot: {x: 0.3866927, y: 0.7997148}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
