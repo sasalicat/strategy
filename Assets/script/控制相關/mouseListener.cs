@@ -11,7 +11,7 @@ public class mouseListener : MonoBehaviour {
     public Vector2 ScreenSize;//用世界座標換算後的屏幕大小
     public const float BOUNDARY_WIDTH = 16;
     public const float BOUNDARY_HEIGHT = 22.5f;
-    public Delegate.withGameObject onReleaseDrag=null;
+    public Delegate.withGameObject onReleaseDrag;
 	// Use this for initialization
     public static Vector2 translateMouse()
     {
@@ -38,6 +38,7 @@ public class mouseListener : MonoBehaviour {
         }
         else
         {
+            Debug.Log("mouseLister 被赋值///");
             main = this;
         }
     }

@@ -7,7 +7,7 @@ public class Phantasm : MonoBehaviour {
     public const sbyte TRAP = 1;
     public sbyte roleNo;
     public sbyte radiu = 2;
-    public sbyte kind = 0;
+    public sbyte kind = ROLE;
 	// Use this for initialization
 	void Start () {
 		

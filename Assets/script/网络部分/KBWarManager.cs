@@ -22,6 +22,9 @@ public class KBWarManager : WarFieldManager
     public const sbyte DIED = 13;
     public const sbyte SET_CAN_MOVE = 14;
     public const sbyte CREATE_EFFECTION_SP = 15;
+    public const sbyte CREATE_TRAP = 16;
+    public const sbyte DELETE_TRAP = 17;
+    public const sbyte ROUND_BEGIN = 18;
     private class Order
     {
         public sbyte actionNo;
@@ -40,6 +43,16 @@ public class KBWarManager : WarFieldManager
     private Dictionary<sbyte, SkillBag> sbags = new Dictionary<sbyte, SkillBag>();
     public Dictionary<sbyte, Vector2> debugPos = new Dictionary<sbyte, Vector2>();
     public GameObject hpbar;
+    public Int32 localId;
+
+    private sbyte mode = 0;
+    public sbyte Gamemode
+    {
+        get
+        {
+            return mode;
+        }
+    }
     public void addOrder(sbyte actionNo,Dictionary<string,object> args)
     {
         orders.Add(new Order(actionNo, args));
@@ -63,6 +76,10 @@ public class KBWarManager : WarFieldManager
     // Use this for initialization
     protected void Start () {
         base.Start();
+        girdManager.main.StartDraw();
+        mode = Account.gamemode;
+        localId = KBEngineApp.app.player().id;
+        KBEngineApp.app.player().cellCall("clientloadingReady",new object[]{ });
     }
 	
 	// Update is called once per frame
@@ -262,6 +279,28 @@ public class KBWarManager : WarFieldManager
                         {
                             GameObject newone= Instantiate(EffectionTable.main.sp_effections[(int)noworder.args["effectionNo"]],roles[(sbyte)noworder.args["tragetNo"]].transform.position,Quaternion.Euler(Vector3.zero));
                             newone.GetComponent<effection_sp>().onBeenCreated(roles[(sbyte)noworder.args["tragetNo"]],roles[turnOwnerNo]);
+                            break;
+                        }
+                    case CREATE_TRAP:
+                        {
+                            GameObject newTrap = Instantiate(TrapList.main.traps[(short)noworder.args["kind"]],(Vector2)noworder.args["position"],transform.rotation);
+                            newTrap.GetComponent<Trap>().onInit((long)noworder.args["ownerId"]);
+                            traps[(sbyte)noworder.args["trapNo"]]= newTrap;
+                            AfterCreateTrap(newTrap);
+                            break;
+                        }
+                    case DELETE_TRAP:
+                        {
+                            sbyte index = (sbyte)noworder.args["trapNo"];
+                            Destroy(traps[index]);
+                            traps.Remove(index);
+                            break;
+                        }
+                    case ROUND_BEGIN:
+                        {
+                            Int32 turnId = (Int32)noworder.args["ownerId"];
+                            Debug.Log("round begin:"+RoundBegin+" arg:"+turnId);
+                            RoundBegin(turnId);
                             break;
                         }
                 }

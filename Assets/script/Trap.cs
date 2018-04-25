@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Trap : MonoBehaviour {
-    public abstract void onInit(int ownerId);
+    public abstract void onInit(long ownerId);
     public virtual void befDestory()
     {
 

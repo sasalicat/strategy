@@ -6,6 +6,7 @@ public class headLable : MonoBehaviour {
     public sbyte roleNo;
     public void onClick()
     {
+        Debug.Log("进入" + gameObject.name + "的onClick");
         mouseListener.main.dragObj = gameObject;
     }
     public void onUnClick()

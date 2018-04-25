@@ -5,7 +5,10 @@ using UnityEngine;
 public class WarFieldManager : MonoBehaviour {//管理场上角色的脚本
     public static WarFieldManager manager = null;
     public Dictionary<sbyte, GameObject> roles= new Dictionary<sbyte, GameObject>();
+    public Dictionary<sbyte, GameObject> traps = new Dictionary<sbyte, GameObject>();
     public Delegate.withGameObject AfterCreateRole;
+    public Delegate.withGameObject AfterCreateTrap;
+    public Delegate.withInt32 RoundBegin;
     // Use this for initialization
     protected  void Start () {
 

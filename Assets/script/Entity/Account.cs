@@ -12,6 +12,7 @@
         public Dictionary<string, object> RoomInitData;//用于初始化房间的列表
         public List<Dictionary<string, object>> RoomChangeList=new List<Dictionary<string, object>>();
         private int count = 1;
+        public static sbyte gamemode = 0;
 
         public static bool PlayerInRoom = false;//用于确定player的init是因为登入还是
         //public addRoom addroom_fuction;//在hallmanager裏面加 
@@ -26,9 +27,11 @@
 
          
         }
-        public void cellReady()
+        public void cellReady(sbyte mode)
         {
             Debug.Log("服務器的cell準備好了");
+            modeChoosePanel.changeScene = true;
+            gamemode = mode;
         }
         public void addNewUnit(sbyte no,short kind,Dictionary<String,object> skillList, float posx, float posy,long ownerid) {//放置一个新角色
             Debug.Log("加新的角色 no"+no+" kind"+kind);
@@ -151,6 +154,28 @@
             arg["effectionNo"] = (int)effectionNo;
             arg["tragetNo"] = tragetNo;
             ((KBWarManager)WarFieldManager.manager).addOrder(KBWarManager.CREATE_EFFECTION_SP, arg);
+        }
+        public void addTrap(short trapKind,sbyte trapNo,Vector2 pos,long ownerId)
+        {
+            Dictionary<string, object> arg = new Dictionary<string, object>();
+            arg["kind"] = trapKind;
+            arg["trapNo"] = trapNo;
+            arg["position"] = pos;
+            arg["ownerId"] = ownerId;
+            ((KBWarManager)WarFieldManager.manager).addOrder(KBWarManager.CREATE_TRAP, arg);
+        }
+        public void delTrap(sbyte no)
+        {
+            Dictionary<string, object> arg = new Dictionary<string, object>();
+            arg["trapNo"] = no;
+            ((KBWarManager)WarFieldManager.manager).addOrder(KBWarManager.DELETE_TRAP, arg);
+        }
+        public void roundBegin(Int32 id)
+        {
+            Debug.Log("round begin:"+id);
+            Dictionary<string, object> arg = new Dictionary<string, object>();
+            arg["ownerId"] = id;
+            ((KBWarManager)WarFieldManager.manager).addOrder(KBWarManager.ROUND_BEGIN, arg);
         }
     }
 }

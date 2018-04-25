@@ -7,4 +7,5 @@ public class Delegate {
     public delegate void withGameObject(GameObject gobj);
     public delegate void withColor(Color nowcolor);
     public delegate void withNothing();
+    public delegate void withInt32(System.Int32 arg);
 }

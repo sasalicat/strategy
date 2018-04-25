@@ -1,37 +1,39 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class TeamLable : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
+public class TeamLable : IconLabel {
+    public GameObject itemLabel;
+    private Int32 nowTurnId;
+    private bool hasDele=false;
+    // Use this for initialization
+    void Start () {
         mouseListener.main.onReleaseDrag += delPhantasm;
+        if (!hasDele)
+        {
+            WarFieldManager.manager.AfterCreateRole += aftCreateRole;
+            WarFieldManager.manager.RoundBegin += onRound;
+            hasDele = true;
+        }
+        gameObject.SetActive(false);
     }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
-    public void onExit()
+    public void aftCreateRole(GameObject role)
     {
-        Debug.Log("onExitLable...........");
-        if (mouseListener.main.dragObj!=null && mouseListener.main.dragObj.tag == "headIcon")
+        Debug.Log("呼叫after createRole");
+        if (nowTurnId == ((KBWarManager)WarFieldManager.manager).localId)
         {
-            mouseListener.main.dragObj= createPhantasm(mouseListener.main.dragObj.GetComponent<headLable>().roleNo);
+            gameObject.SetActive(false);
+            itemLabel.SetActive(true);
         }
     }
-    public void beClick()
-    {
-        Debug.Log("mouse down#############");
-        if (mouseListener.main.dragObj == null)
-            mouseListener.main.dragObj = gameObject;
-    }
-    public void beUnClick()
-    {
-        mouseListener.main.dragObj = null;
-    }
-    public GameObject createPhantasm(sbyte roleNo)//創建一個自動找到正確位置的角色物件的幻象
+
+    public override GameObject createPhantasm(sbyte roleNo)//創建一個自動找到正確位置的角色物件的幻象
     {
         GameObject phant= Instantiate(RoleList.main.roles[roleNo]);
         phant.AddComponent<Phantasm>().roleNo=roleNo;
@@ -41,11 +43,10 @@ public class TeamLable : MonoBehaviour {
     {
         Debug.Log("delPhantasm 被觸發");
         Phantasm script = gobj.GetComponent<Phantasm>();
-        if (script != null)//確定是幻影
+        if (script != null && script.kind == Phantasm.ROLE)//確定是幻影
         {
             if (girdManager.main.Vaild(gobj.transform.position))
             {
-                if (script.kind == Phantasm.ROLE)
                     WarFieldManager.manager.createRole(script.roleNo, gobj.transform.position);
             }
             Debug.Log("删除幻影");
@@ -56,5 +57,14 @@ public class TeamLable : MonoBehaviour {
     {
         girdManager.main.clearGirds();
         gameObject.SetActive(false);
+    }
+    public void onRound(Int32 ownerId)
+    {
+        Debug.Log("在teamLabel 中ownerId为" + ownerId + "localid 为" + ((KBWarManager)KBWarManager.manager).localId);
+        nowTurnId = ownerId;
+        if (((KBWarManager)KBWarManager.manager).localId == ownerId)
+        {
+            gameObject.SetActive(true);
+        }
     }
 }
