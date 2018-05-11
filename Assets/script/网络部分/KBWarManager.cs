@@ -128,14 +128,12 @@ public class KBWarManager : WarFieldManager
                             Skin skin= roles[(sbyte)noworder.args["no"]].AddComponent<Skin>();
                             skin.onDestory += removeRole;
                             //设置hpbar
-                            Color c;
-                            if ((long)noworder.args["ownerid"] == KBEngineApp.app.player().id)
-                                c = Color.red;
-                            else
-                                c = Color.blue;
-                            hpBarManager.main.CreateHpBar(roles[(sbyte)noworder.args["no"]],c);
+                            bool local = (long)noworder.args["ownerid"] == KBEngineApp.app.player().id;
+          
+                            hpBarManager.main.createHpBar((sbyte)noworder.args["no"], roles[(sbyte)noworder.args["no"]],(short)noworder.args["maxHp"],local);
                             //设置格子主管的占用
                             AfterCreateRole(roles[(sbyte)noworder.args["no"]]);
+
                             break;
                         }
                     case TURN_NO:
@@ -209,6 +207,8 @@ public class KBWarManager : WarFieldManager
                             Debug.Log("takeDamage" + (sbyte)noworder.args["num"]);
                             Vector2 offset = UnityEngine.Random.insideUnitCircle;
                             FloatingCreate.main.createAt((sbyte)noworder.args["num"], roles[turnOwnerNo].transform.position+(Vector3)offset);
+                            int num = (sbyte)noworder.args["num"];
+                            hpBarManager.main.updateHpBar(turnOwnerNo,- num);
                             break;
                         }
                     case USE_SKILL:
@@ -235,6 +235,8 @@ public class KBWarManager : WarFieldManager
                     case BEEN_HEAL:
                         {
                             FloatingCreate.main.createAt((sbyte)noworder.args["num"], roles[turnOwnerNo].transform.position,FloatingCreate.GREEN_BEGIN);
+                            int num = (sbyte)noworder.args["num"];
+                            hpBarManager.main.updateHpBar(turnOwnerNo, num);
                             break;
                         }
                     case BE_REPEL:
@@ -277,8 +279,15 @@ public class KBWarManager : WarFieldManager
                         }
                     case CREATE_EFFECTION_SP:
                         {
-                            GameObject newone= Instantiate(EffectionTable.main.sp_effections[(int)noworder.args["effectionNo"]],roles[(sbyte)noworder.args["tragetNo"]].transform.position,Quaternion.Euler(Vector3.zero));
-                            newone.GetComponent<effection_sp>().onBeenCreated(roles[(sbyte)noworder.args["tragetNo"]],roles[turnOwnerNo]);
+                            if (noworder.args.ContainsKey("tragetNo"))
+                            {
+                                GameObject newone = Instantiate(EffectionTable.main.sp_effections[(int)noworder.args["effectionNo"]], roles[(sbyte)noworder.args["tragetNo"]].transform.position, Quaternion.Euler(Vector3.zero));
+                                newone.GetComponent<effection_sp>().onBeenCreated(roles[(sbyte)noworder.args["tragetNo"]], roles[turnOwnerNo]);
+                            }
+                            else
+                            {
+                                GameObject newone = Instantiate(EffectionTable.main.effections[(int)noworder.args["effectionNo"]], (Vector2)noworder.args["position"],transform.rotation);
+                            }
                             break;
                         }
                     case CREATE_TRAP:

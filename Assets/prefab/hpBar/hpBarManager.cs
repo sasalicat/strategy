@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class hpBarManager : MonoBehaviour {
     public static hpBarManager main;
     public GameObject hpBar;
+    public Dictionary<sbyte,hpbar> hpBarList=new Dictionary<sbyte, hpbar>();
 	// Use this for initialization
 	void Start () {
         if (main == null)
@@ -17,11 +18,16 @@ public class hpBarManager : MonoBehaviour {
             Destroy(this);
         }
 	}
-	public void CreateHpBar(GameObject owner,Color c)
+	public void createHpBar(sbyte ownerId,GameObject owner,int maxhp,bool local)
     {
         GameObject newone = Instantiate(hpBar, transform);
-        newone.GetComponent<hpBarControl>().followWith=owner;
-        newone.GetComponent<Image>().color = c;
+        hpbar script = newone.GetComponent<hpbar>();
+        script.setHpbar(owner,maxhp,local);
+        hpBarList[ownerId] = script;
+    }
+    public void updateHpBar(sbyte ownerId,int updateNum)
+    {
+        hpBarList[ownerId].nowHp += updateNum;
     }
 	// Update is called once per frame
 	void Update () {

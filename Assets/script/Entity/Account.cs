@@ -33,7 +33,7 @@
             modeChoosePanel.changeScene = true;
             gamemode = mode;
         }
-        public void addNewUnit(sbyte no,short kind,Dictionary<String,object> skillList, float posx, float posy,long ownerid) {//放置一个新角色
+        public void addNewUnit(sbyte no,short kind,Dictionary<String,object> skillList, float posx, float posy,long ownerid,short maxHp) {//放置一个新角色
             Debug.Log("加新的角色 no"+no+" kind"+kind);
             Dictionary<string, object> arg=new Dictionary<string, object>();
             arg["kind"] = kind;
@@ -42,6 +42,7 @@
             arg["position"] = new Vector2(posx, posy);
             arg["no"] = no;
             arg["ownerid"] = ownerid;
+            arg["maxHp"] = maxHp;
             ((KBWarManager)WarFieldManager.manager).addOrder( KBWarManager.ADD_UNIT, arg);
         }
         public void setMoving(sbyte mov)
@@ -153,6 +154,13 @@
             Dictionary<string, object> arg = new Dictionary<string, object>();
             arg["effectionNo"] = (int)effectionNo;
             arg["tragetNo"] = tragetNo;
+            ((KBWarManager)WarFieldManager.manager).addOrder(KBWarManager.CREATE_EFFECTION_SP, arg);
+        }
+        public void createEffectionAt(short effectionNo,Vector2 pos)
+        {
+            Dictionary<string, object> arg = new Dictionary<string, object>();
+            arg["effectionNo"] = (int)effectionNo;
+            arg["position"] = pos;
             ((KBWarManager)WarFieldManager.manager).addOrder(KBWarManager.CREATE_EFFECTION_SP, arg);
         }
         public void addTrap(short trapKind,sbyte trapNo,Vector2 pos,long ownerId)
