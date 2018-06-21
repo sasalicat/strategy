@@ -11,6 +11,7 @@
         public delegate void addRoom(string name, string num);
         public Dictionary<string, object> RoomInitData;//用于初始化房间的列表
         public List<Dictionary<string, object>> RoomChangeList=new List<Dictionary<string, object>>();
+        public List<object> lastRoleNoList = new List<object>();
         private int count = 1;
         public static sbyte gamemode = 0;
 
@@ -27,11 +28,29 @@
 
          
         }
+        public void set_teamateNos(object value)
+        {
+         //   string show = "";
+             if (((List<object>)value).Count > 0)
+             {
+                Debug.Log("in set_teamate No typr is" + value.GetType());
+                if (WarFieldManager.manager != null)
+                {
+                    WarFieldManager.manager.onGetRoleList((List<object>)value);                    
+                }
+
+                    
+             }    
+       //     Debug.Log("============set_teamateNos 被触发:" + show);
+        }
         public void cellReady(sbyte mode)
         {
             Debug.Log("服務器的cell準備好了");
             modeChoosePanel.changeScene = true;
             gamemode = mode;
+            List<object> roleNos = (List<object>)getDefinedProperty("teamateNos");
+            Debug.Log("在cellReady中 roleNos为"+roleNos);
+
         }
         public void addNewUnit(sbyte no,short kind,Dictionary<String,object> skillList, float posx, float posy,long ownerid,short maxHp) {//放置一个新角色
             Debug.Log("加新的角色 no"+no+" kind"+kind);
@@ -184,6 +203,19 @@
             Dictionary<string, object> arg = new Dictionary<string, object>();
             arg["ownerId"] = id;
             ((KBWarManager)WarFieldManager.manager).addOrder(KBWarManager.ROUND_BEGIN, arg);
+        }
+        public void actionFinish(short no)
+        {
+            Dictionary<string, object> arg = new Dictionary<string, object>();
+            arg["cardNo"] = no;
+            ((KBWarManager)WarFieldManager.manager).addOrder(KBWarManager.USE_CARD, arg);
+        }
+        public void TransmissionRoleTo(sbyte roleIndex,Vector2 pos)
+        {
+            Dictionary<string, object> arg = new Dictionary<string, object>();
+            arg["no"] = roleIndex;
+            arg["position"] = pos;
+            ((KBWarManager)WarFieldManager.manager).addOrder(KBWarManager.TELEPORT, arg);
         }
     }
 }

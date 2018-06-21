@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class headLable : MonoBehaviour {
     public sbyte roleNo;
+    public bool big = true;
     public void onClick()
     {
         Debug.Log("进入" + gameObject.name + "的onClick");

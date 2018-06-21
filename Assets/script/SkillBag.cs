@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SkillBag : MonoBehaviour {
+    public sbyte roleNo;
     public List<Skill> skillsInside;
     public void init(List<object> list)
     {

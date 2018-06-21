@@ -7,9 +7,23 @@ public class TeamLable : IconLabel {
     public GameObject itemLabel;
     private Int32 nowTurnId;
     private bool hasDele=false;
+    public List<short> listForCreate = null;
+    public GameObject lastDragObj = null;
+    List<GameObject> IconList = new List<GameObject>();
+    public void onGetRoleNos(List<object> list)
+    {
+        List<short> newlist = new List<short>();
+        foreach(object no in list)
+        {
+            Debug.Log("type is " + no.GetType());
+            newlist.Add((short)no);
+        }
+        listForCreate = newlist;
+    }
     // Use this for initialization
     void Start () {
-        mouseListener.main.onReleaseDrag += delPhantasm;
+        //mouseListener.main.onReleaseDrag += delPhantasm;
+        WarFieldManager.manager.onGetRoleList += onGetRoleNos;
         if (!hasDele)
         {
             WarFieldManager.manager.AfterCreateRole += aftCreateRole;
@@ -20,8 +34,21 @@ public class TeamLable : IconLabel {
     }
 	
 	// Update is called once per frame
-	void Update () {
-		
+	protected void Update () {
+        if (listForCreate != null)
+        {
+            foreach(GameObject icon in IconList)//删除所有现有的Icon
+            {
+                Destroy(icon);
+            }
+            foreach(sbyte no in listForCreate)//根据list创造新的icon
+            {
+                GameObject newIcon = Instantiate(HeadIconList.main.roleHeadIcons[no], gameObject.transform);
+                newIcon.transform.localScale = new Vector3(1, 1, 1);
+                IconList.Add(newIcon);
+            }
+            listForCreate = null;
+        }
 	}
     public void aftCreateRole(GameObject role)
     {
@@ -37,6 +64,9 @@ public class TeamLable : IconLabel {
     {
         GameObject phant= Instantiate(RoleList.main.roles[roleNo]);
         phant.AddComponent<Phantasm>().roleNo=roleNo;
+        lastDragObj = mouseListener.main.dragObj;
+        girdManager.main.radiu = 2;
+        Debug.Log("在创建幻影中 lastDragObj为"+lastDragObj);
         return phant;
     }
     public void delPhantasm(GameObject gobj)
@@ -47,8 +77,11 @@ public class TeamLable : IconLabel {
         {
             if (girdManager.main.Vaild(gobj.transform.position))
             {
-                    WarFieldManager.manager.createRole(script.roleNo, gobj.transform.position);
+                    //WarFieldManager.manager.createRole(script.roleNo, gobj.transform.position);
+                    Debug.Log("创建角色中 lastDragObj为"+lastDragObj);
+                    Destroy(lastDragObj);
             }
+            lastDragObj = null;
             Debug.Log("删除幻影");
             Destroy(gobj);
         }

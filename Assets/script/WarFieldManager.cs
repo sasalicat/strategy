@@ -9,6 +9,11 @@ public class WarFieldManager : MonoBehaviour {//管理场上角色的脚本
     public Delegate.withGameObject AfterCreateRole;
     public Delegate.withGameObject AfterCreateTrap;
     public Delegate.withInt32 RoundBegin;
+    public Delegate.withList onGetRoleList;
+    public Delegate.withList onGetTrapList;
+    public Delegate.withInt32 AfterUseCard;
+    public Delegate.withV2andGameObj AfterTeleport;
+    public List<object> InitRoleList = null;
     // Use this for initialization
     protected  void Start () {
 
@@ -31,5 +36,8 @@ public class WarFieldManager : MonoBehaviour {//管理场上角色的脚本
     {
 
     }
+    public virtual void useActionCard(short ano,Dictionary<string,object> arg)
+    {
 
+    }
 }

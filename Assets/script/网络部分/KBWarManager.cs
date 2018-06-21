@@ -25,6 +25,8 @@ public class KBWarManager : WarFieldManager
     public const sbyte CREATE_TRAP = 16;
     public const sbyte DELETE_TRAP = 17;
     public const sbyte ROUND_BEGIN = 18;
+    public const sbyte USE_CARD = 19;
+    public const sbyte TELEPORT = 20;
     private class Order
     {
         public sbyte actionNo;
@@ -80,6 +82,7 @@ public class KBWarManager : WarFieldManager
         mode = Account.gamemode;
         localId = KBEngineApp.app.player().id;
         KBEngineApp.app.player().cellCall("clientloadingReady",new object[]{ });
+
     }
 	
 	// Update is called once per frame
@@ -117,6 +120,7 @@ public class KBWarManager : WarFieldManager
                                 foots[(sbyte)noworder.args["no"]].debug = true;
                             }
                             SkillBag bag= roles[(sbyte)noworder.args["no"]].AddComponent<SkillBag>();
+                            bag.roleNo = (sbyte)noworder.args["no"];
                             sbags[(sbyte)noworder.args["no"]] = bag;
                             List<object> list = (List<object>)noworder.args["skillList"];
                             //Debug.Log(rolekind+"no"+ (sbyte)noworder.args["no"] + "在add_unit中:");
@@ -126,6 +130,7 @@ public class KBWarManager : WarFieldManager
                             bag.init(((List<object>) noworder.args["skillList"]));
                             roles[(sbyte)noworder.args["no"]].AddComponent<BuffBag>();
                             Skin skin= roles[(sbyte)noworder.args["no"]].AddComponent<Skin>();
+                            roles[(sbyte)noworder.args["no"]].tag = "role";
                             skin.onDestory += removeRole;
                             //设置hpbar
                             bool local = (long)noworder.args["ownerid"] == KBEngineApp.app.player().id;
@@ -294,6 +299,7 @@ public class KBWarManager : WarFieldManager
                         {
                             GameObject newTrap = Instantiate(TrapList.main.traps[(short)noworder.args["kind"]],(Vector2)noworder.args["position"],transform.rotation);
                             newTrap.GetComponent<Trap>().onInit((long)noworder.args["ownerId"]);
+                            newTrap.tag = "trap";
                             traps[(sbyte)noworder.args["trapNo"]]= newTrap;
                             AfterCreateTrap(newTrap);
                             break;
@@ -310,6 +316,24 @@ public class KBWarManager : WarFieldManager
                             Int32 turnId = (Int32)noworder.args["ownerId"];
                             Debug.Log("round begin:"+RoundBegin+" arg:"+turnId);
                             RoundBegin(turnId);
+                            break;
+                        }
+                    case USE_CARD:
+                        {
+                            int cardNo = (int)noworder.args["cardNo"];
+                            AfterUseCard(cardNo);
+                            break;
+                        }
+                    case TELEPORT:
+                        {
+
+                            sbyte roleNo = (sbyte)noworder.args["no"];
+                            Vector2 pos = (Vector2)noworder.args["position"];
+                            Vector2 oripos = roles[roleNo].transform.position;
+                            roles[roleNo].transform.position = pos;
+                            Debug.Log("teleport " + roles[roleNo] + " to " + pos);
+                            if(AfterTeleport!=null)
+                                AfterTeleport(oripos, roles[roleNo]);
                             break;
                         }
                 }
@@ -329,6 +353,27 @@ public class KBWarManager : WarFieldManager
     {
         KBEngine.KBEngineApp.app.player().cellCall("createTrap", new object[] { tno, pos });
     }
+    public override void useActionCard(short ano, Dictionary<string, object> arg)
+    {
+        Debug.Log("have roleNo:" + arg.ContainsKey("roleNo"));
+        if (arg.ContainsKey("roleNo"))
+        {
+
+            if (!arg.ContainsKey("position"))
+            {
+                KBEngine.KBEngineApp.app.player().cellCall("actionCardUnitOnly", new object[] { ano, arg["roleNo"]});
+            }
+            else
+            {
+                KBEngine.KBEngineApp.app.player().cellCall("actionCardUnitPos", new object[] { ano, arg["roleNo"],arg["position"]});
+            }
+        }
+        else if (arg.ContainsKey("roleNos"))
+        {
+            KBEngine.KBEngineApp.app.player().cellCall("actionCardUnitList", new object[] { ano, arg["roleNos"] });
+        }
+    }
+
     public void debugGameStart()
     {
 

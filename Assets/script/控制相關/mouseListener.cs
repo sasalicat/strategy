@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class mouseListener : MonoBehaviour {
     public static mouseListener main;
+    public bool lastClicking = false;
     public bool clicking = false; 
     public GameObject dragObj=null;
     public Vector2 lastMouesPos;
@@ -11,7 +12,8 @@ public class mouseListener : MonoBehaviour {
     public Vector2 ScreenSize;//用世界座標換算後的屏幕大小
     public const float BOUNDARY_WIDTH = 16;
     public const float BOUNDARY_HEIGHT = 22.5f;
-    public Delegate.withGameObject onReleaseDrag;
+    public Delegate.withNothing onReleaseDrag;
+    public bool radiuBig = true;
 	// Use this for initialization
     public static Vector2 translateMouse()
     {
@@ -46,7 +48,7 @@ public class mouseListener : MonoBehaviour {
     void Update () {
         nowMousePos = translateMouse();
         girdManager g = girdManager.main;
-        g.reSetColor();
+        //g.reSetColor();
         if (Input.GetMouseButton(0))
         {
             clicking = true;
@@ -61,7 +63,7 @@ public class mouseListener : MonoBehaviour {
             if(dragObj != null)
             {
                 Debug.Log(">>>鼠标施放<<<");
-                onReleaseDrag(dragObj);
+                onReleaseDrag();
                 dragObj = null;
             }
         }
@@ -78,12 +80,24 @@ public class mouseListener : MonoBehaviour {
             {
                 Camera.main.transform.position += (Vector3)arraw;
             }
+            if (!lastClicking)
+            {
+                Debug.Log("enter call"); 
+                List<GameObject> ans= RayCaster.main.castGrid(nowMousePos);
+                Debug.Log("cast 到 " + ans.Count + " 個結果");
+                //Debug.Log("group:"+girdManager.g)
+                foreach(GameObject gird in ans)
+                {
+                   // gird.GetComponent<gridItem>().onClick();
+                }
+            }
         }
-        else
+        /*else
         {
             g.turnGreen(nowMousePos);
-            Debug.Log("turn green end-------------------");
-        }
+            //Debug.Log("turn green end-------------------");
+        }*/
         lastMouesPos = nowMousePos;
-	}
+        lastClicking = clicking;
+    }
 }

@@ -36,9 +36,15 @@ public class girdGroup
     private sbyte mode = 1;
     public contain[,] girds;
     public Vector2 beginPoint;
+    public IntPair beginIndexs=new IntPair(0,0);
     public Vector2 everyDistant;
     public Vector2 num;
     private girdManager manager;
+    /*public void onclick(int x,int y)
+    {
+        if(manager.onGirdClick!=null)
+            manager.onGirdClick(x + (int)beginIndexs.x, y + (int)beginIndexs.y);
+    }*/
     public void clearGrids()
     {
         foreach (contain g in girds)
@@ -62,6 +68,7 @@ public class girdGroup
                 GameObject obj = manager.createObj(gridItem, new Vector3(beginPoint.x + everyDistant.x * x, beginPoint.y + everyDistant.y * y, 0));
                 obj.GetComponent<SpriteRenderer>().color = manager.color_origen;
                 girds[y, x] = new contain(obj);
+                obj.GetComponent<gridItem>().init(x, y, this);
                 //                Debug.Log("x=" + x + " y=" + y + " pos:" + new Vector3(beginPoint.x + everyDistant.x * x, beginPoint.y + everyDistant.y * y, 0));
             }
         }
@@ -91,6 +98,10 @@ public class girdGroup
             }
         }
         mode = 2;
+    }
+    public void setBeginIndexs(int x,int y)
+    {
+        this.beginIndexs = new IntPair(x, y);
     }
     public bool inside(Vector2 mousePos)
     {
@@ -148,23 +159,82 @@ public class girdGroup
         }
         return false;
     }
+    public bool valid(Vector2 mousePos,GameObject ignore)
+    {
+        Vector2 indexs = getCenter(mousePos);
+        if (inside(mousePos))
+        {
+            if (mode == 1)
+            {
+                if (indexs.x > 0 && indexs.y > 0)
+                {
+                    if (girds[(int)indexs.y, (int)indexs.x].owner != null && girds[(int)indexs.y, (int)indexs.x].owner != ignore)
+                    {
+                       
+                        return false;
+                    }
+                    if (girds[(int)indexs.y, (int)indexs.x - 1].owner != null && girds[(int)indexs.y, (int)indexs.x-1].owner != ignore)
+                    {
+                        return false;
+                    }
+                    if (girds[(int)indexs.y - 1, (int)indexs.x].owner != null && girds[(int)indexs.y-1, (int)indexs.x].owner != ignore)
+                    {
+                        return false;
+                    }
+                    if (girds[(int)indexs.y - 1, (int)indexs.x - 1].owner != null && girds[(int)indexs.y-1, (int)indexs.x-1].owner != ignore)
+                    {
+                        return false;
+                    }
+                    return true;
+                }
+            }
+            else if (mode == 2)
+            {
+                if (girds[(int)indexs.y, (int)indexs.x].owner != null)
+                    return false;
+                return true;
+            }
+        }
+        return false;
+    }
+    public IntPair getIndexFor(Vector2 postion)
+    {
+        Debug.Log("beginIndex:"+ beginIndexs);
+        Debug.Log("position:" + postion+"beginPoint"+beginPoint+"everyDistant"+everyDistant);
+        return new IntPair((int)((postion.x - (beginPoint.x-1)) / everyDistant.x)+beginIndexs.x, 
+            (int)((postion.y - (beginPoint.y-1)) / everyDistant.y)+beginIndexs.y);
+    }
     public Vector2 getCenter(Vector2 pos)
     {
 
         return new Vector2((int)((pos.x - beginPoint.x + 0.5f * everyDistant.x) / everyDistant.x), (int)((pos.y - beginPoint.y + 0.5f * everyDistant.y) / everyDistant.y));
 
     }
+    public Vector2 getRealCenter(Vector2 pos,int radiu)
+    {
+        if (radiu == 2)
+        {
+            return getRealCenter(pos);
+        }
+        else if(radiu == 1)
+        {
+            Vector2 indexs = getCenter(pos);
+            return new Vector2(everyDistant.x * indexs.x + beginPoint.x, everyDistant.y * indexs.y + beginPoint.y);
+        }
+        return Vector2.zero;
+    }
     public Vector2 getRealCenter(Vector2 pos)
     {
         Vector2 indexs= getCenter(pos);
         return new Vector2(everyDistant.x * indexs.x + beginPoint.x - 0.5f * everyDistant.x, everyDistant.y * indexs.y + beginPoint.y - 0.5f * everyDistant.y);
     }
-    public void turnGreen(Vector3 pos)
+    public List<GameObject> turnGreen(Vector3 pos)
     {
+        List<GameObject> dyed = new List<GameObject>();
         if (inside(pos))
         {
             Vector2 mainGridPos = getCenter(pos);
-            Debug.Log("in turn green index is " + mainGridPos);
+            //Debug.Log("in turn green index is " + mainGridPos);
             if (mode == 1)
             {
                 int x = (int)mainGridPos.x;
@@ -175,21 +245,30 @@ public class girdGroup
                     {
                         girds[y, x].land.GetComponent<SpriteRenderer>().color = manager.color_error;
                         manager.beDyed.Add(girds[y, x].land);
-                        return;
+                        dyed.Add(girds[y, x].land);
+                        return dyed;
                     }
                     else if (x == 0)
                     {
                         girds[y, x].land.GetComponent<SpriteRenderer>().color = manager.color_error;
                         manager.beDyed.Add(girds[y, x].land);
+                        dyed.Add(girds[y, x].land);
+
                         girds[y - 1, x].land.GetComponent<SpriteRenderer>().color = manager.color_error;
                         manager.beDyed.Add(girds[y - 1, x].land);
+                        dyed.Add(girds[y-1, x].land);
+                        return dyed;
                     }
                     else if (y == 0)
                     {
                         girds[y, x].land.GetComponent<SpriteRenderer>().color = manager.color_error;
                         manager.beDyed.Add(girds[y, x].land);
+                        dyed.Add(girds[y, x].land);
+
                         girds[y, x - 1].land.GetComponent<SpriteRenderer>().color = manager.color_error;
                         manager.beDyed.Add(girds[y, x - 1].land);
+                        dyed.Add(girds[y , x-1].land);
+                        return dyed;
                     }
                     else
                     {
@@ -203,6 +282,7 @@ public class girdGroup
                             girds[y, x].land.GetComponent<SpriteRenderer>().color = manager.color_error;
                             manager.beDyed.Add(girds[y, x].land);
                         }
+                        dyed.Add(girds[y, x].land);
                         if (girds[y - 1, x].owner == null)
                         {
                             girds[y - 1, x].land.GetComponent<SpriteRenderer>().color = manager.color_establish;
@@ -213,6 +293,7 @@ public class girdGroup
                             girds[y - 1, x].land.GetComponent<SpriteRenderer>().color = manager.color_error;
                             manager.beDyed.Add(girds[y - 1, x].land);
                         }
+                        dyed.Add(girds[y-1, x].land);
                         if (girds[y, x - 1].owner == null)
                         {
                             girds[y, x - 1].land.GetComponent<SpriteRenderer>().color = manager.color_establish;
@@ -223,6 +304,7 @@ public class girdGroup
                             girds[y, x - 1].land.GetComponent<SpriteRenderer>().color = manager.color_error;
                             manager.beDyed.Add(girds[y, x - 1].land);
                         }
+                        dyed.Add(girds[y, x-1].land);
                         if (girds[y - 1, x - 1].owner == null)
                         {
                             girds[y - 1, x - 1].land.GetComponent<SpriteRenderer>().color = manager.color_establish;
@@ -233,9 +315,12 @@ public class girdGroup
                             girds[y - 1, x - 1].land.GetComponent<SpriteRenderer>().color = manager.color_error;
                             manager.beDyed.Add(girds[y - 1, x - 1].land);
                         }
+                        dyed.Add(girds[y-1, x-1].land);
+                        return dyed;
                     }
                 }
             }
+
 
 
             else if (mode == 2)
@@ -247,10 +332,98 @@ public class girdGroup
                     {
                         obj.GetComponent<SpriteRenderer>().color = manager.color_establish;
                         manager.beDyed.Add(obj);
+                        dyed.Add(obj);
+                        return dyed;
                     }
                 }
             }
         }
+        return dyed;
+    }
+
+    public List<GameObject> turnGreen(Vector3 pos,int radiu)
+    {
+        List<GameObject> dyed = new List<GameObject>();
+        if (radiu == 2)
+        {
+            return turnGreen(pos);
+        }
+
+        else if (radiu == 1)
+        {
+            
+            if (inside(pos))
+            {
+                Vector2 mainGridPos = getCenter(pos);
+                //Debug.Log("in turn green index is " + mainGridPos);
+
+                int x = (int)mainGridPos.x;
+                int y = (int)mainGridPos.y;
+                if (girds[y, x].owner == null)
+                {
+                    girds[y, x].land.GetComponent<SpriteRenderer>().color = manager.color_establish;
+                    manager.beDyed.Add(girds[y, x].land);
+                }
+                else
+                {
+                    girds[y, x].land.GetComponent<SpriteRenderer>().color = manager.color_error;
+                    manager.beDyed.Add(girds[y, x].land);
+                }
+                dyed.Add(girds[y, x].land);
+            }
+
+        }
+        return dyed;
+    }
+    public List<GameObject> turnGreenByIndexs(List<IntPair> map)
+    {
+        List<GameObject> dyed = new List<GameObject>();
+        for(int y=0;y< girds.GetLength(0); y++)
+        {
+            for(int x = 0; x < girds.GetLength(1); x++)
+            {
+                foreach(IntPair pair in map)
+                {
+                    
+                    var realPair = new IntPair(x,y) + beginIndexs;
+                    //Debug.Log("realPair:" + realPair + "pair:" + pair);
+                    if (realPair == pair)
+                    {
+                        Debug.Log("realPair:" + realPair);
+                        girds[y, x].land.GetComponent<SpriteRenderer>().color = manager.color_establish;
+                        manager.beDyed.Add(girds[y, x].land);
+                        dyed.Add(girds[y, x].land);
+                        break;
+                    }
+                }
+            }
+        }
+        return dyed;
+    }
+    public List<GameObject> turnGreenByIndexs(List<IntPair> map,girdManager.turnGreenRequest function)
+    {
+        List<GameObject> dyed = new List<GameObject>();
+        for (int y = 0; y < girds.GetLength(0); y++)
+        {
+            for (int x = 0; x < girds.GetLength(1); x++)
+            {
+                foreach (IntPair pair in map)
+                {
+
+                    var realPair = new IntPair(x, y) + beginIndexs;
+                    //Debug.Log("realPair:" + realPair + "pair:" + pair);
+                    if (realPair == pair)
+                    {
+                        Debug.Log("realPair:" + realPair);
+                        girds[y, x].land.GetComponent<SpriteRenderer>().color =function(this, girds[y, x].land,pair);
+                        manager.beDyed.Add(girds[y, x].land);
+                        dyed.Add(girds[y, x].land);
+                        break;
+                    }
+                }
+            }
+        }
+        return dyed;
     }
     public void roleIn(GameObject role)//创建role到地图上占用格子
     {
@@ -281,9 +454,13 @@ public class girdGroup
             }
         }
     }
+
 }
 
 public class girdManager : MonoBehaviour {
+    public delegate void withXYNo(int x, int y);
+    public delegate Color turnGreenRequest(girdGroup group, GameObject gird, IntPair indexs);
+    //public withXYNo onGirdClick;
     public static girdManager main=null;
     public GameObject gridItem;
     //    private Vector2 beginPoint = new Vector2(-7f,-19f);
@@ -301,6 +478,7 @@ public class girdManager : MonoBehaviour {
     public Color color_origen;
     private sbyte mode = 1;
     public List<girdGroup> groups=new List<girdGroup>();
+    public int radiu = 2;
     // Use this for initialization
     public void aftRoleIn(GameObject roleObj)
     {
@@ -343,6 +521,7 @@ public class girdManager : MonoBehaviour {
         Rectangle[] rects =new Rectangle[1];
         rects[0] = new Rectangle(-1.3f,-3.5f,3,3.3f);
         WarFieldManager.manager.AfterCreateRole += aftRoleIn;
+        WarFieldManager.manager.AfterTeleport += afterTP;
         //drawHollow(beginPoint.x, beginPoint.y, everyDistant.x, everyDistant.y, (int)num.x, (int)num.y, rects);
 
     }
@@ -352,7 +531,7 @@ public class girdManager : MonoBehaviour {
         Vector2 anspos = mousePos;
         foreach(girdGroup g in groups)
         {
-            Debug.Log("in realcenter inside is" + g.inside(mousePos));
+            //Debug.Log("in realcenter inside is" + g.inside(mousePos));
             if (g.inside(mousePos))
             {
                 anspos=g.getRealCenter(mousePos);
@@ -360,14 +539,67 @@ public class girdManager : MonoBehaviour {
         }
         return anspos;
     }
-    public void turnGreen(Vector2 pos)
+    public Vector2 getRealCenter(Vector2 mousePos,int radiu)
     {
-        
+        if (radiu == 2)
+        {
+           return  getRealCenter(mousePos);
+        }
+        else if (radiu == 1)
+        {
+            Vector2 anspos = mousePos;
+            foreach (girdGroup g in groups)
+            {
+                //Debug.Log("in realcenter inside is" + g.inside(mousePos));
+                if (g.inside(mousePos))
+                {
+                    anspos = g.getRealCenter(mousePos,1);
+                }
+            }
+            return anspos;
+        }
+        return Vector2.zero;
+    }
+    public List<GameObject> turnGreen(Vector2 pos)
+    {
+        List<GameObject> dyed = new List<GameObject>();
         foreach (girdGroup g in groups)
         {
-            Debug.Log("in turngreen inside is" + g.inside(pos));
-            g.turnGreen(pos);
+            //Debug.Log("in turngreen inside is" + g.inside(pos));
+            
+            var ans= g.turnGreen(pos,radiu);
+            foreach(GameObject obj in ans)
+            {
+                dyed.Add(obj);
+            }
         }
+        return dyed;
+    }
+    public List<GameObject> turnGreenByIndexs(List<IntPair> map)
+    {
+        List<GameObject> dyed = new List<GameObject>();
+        foreach (girdGroup group in groups)
+        {
+            var ans= group.turnGreenByIndexs(map);
+            foreach (GameObject obj in ans)
+            {
+                dyed.Add(obj);
+            }
+        }
+        return dyed;
+    }
+    public List<GameObject> turnGreenByIndexs(List<IntPair> map,turnGreenRequest request)
+    {
+        List<GameObject> dyed = new List<GameObject>();
+        foreach (girdGroup group in groups)
+        {
+            var ans = group.turnGreenByIndexs(map,request);
+            foreach (GameObject obj in ans)
+            {
+                dyed.Add(obj);
+            }
+        }
+        return dyed;
     }
     public void reSetColor()
     {
@@ -377,6 +609,14 @@ public class girdManager : MonoBehaviour {
                 obj.GetComponent<SpriteRenderer>().color = color_origen;
         }
         beDyed.Clear();
+    }
+    public void reSetColorList(List<GameObject> list)
+    {
+        foreach (GameObject obj in list)
+        {
+            if (obj != null)
+                obj.GetComponent<SpriteRenderer>().color = color_origen;
+        }
     }
     public void StartDraw()
     {
@@ -395,6 +635,18 @@ public class girdManager : MonoBehaviour {
         }
         return ans;
     }
+    public IntPair getIndexs(Vector2 pos)
+    {
+        foreach (girdGroup g in groups)
+        {
+            if (g.inside(pos))
+            {
+                return g.getIndexFor(pos);
+                
+            }
+        }
+        return null;
+    }
     public GameObject createObj(GameObject praf,Vector3 pos)
     {
        return Instantiate(praf, pos, transform.rotation);
@@ -407,4 +659,29 @@ public class girdManager : MonoBehaviour {
 	void Update () {
 		
 	}
+    public void afterTP(Vector2 oripos, GameObject role)
+    {
+        foreach (girdGroup group in groups)
+        {
+            if (group.inside(oripos))
+            {
+                IntPair pair = group.getIndexFor(oripos);
+                group.girds[pair.y, pair.x].owner = null;
+
+                if (pair.x - 1 >= 0)
+                {
+                    group.girds[pair.y, pair.x-1].owner = null;
+                }
+                if (pair.y - 1 >= 0)
+                {
+                    group.girds[pair.y-1, pair.x].owner = null;
+                }
+                if (pair.y - 1 >= 0 && pair.x-1>=0)
+                {
+                    group.girds[pair.y - 1, pair.x-1].owner = null;
+                }
+            }
+        }
+        aftRoleIn(role);
+    }
 }
